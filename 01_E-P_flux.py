@@ -6,11 +6,11 @@ from datetime import date
 Fy = np.zeros((145,37),dtype=np.float64)*np.nan
 Fz = np.zeros((145,37),dtype=np.float64)*np.nan
 
-namelist = ['hgt','tmp','ugrd','vgrd']
+namelist = ['temp','ugrd','vgrd']
 
 def hensa(name,day):
-    file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
-    # file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
+    # file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
+    file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
     f = open(file, 'rb')
     print(f'{name} 読み込み中')
     array = np.fromfile(f,dtype='>f').reshape(366,37,145,288)
@@ -21,9 +21,9 @@ def hensa(name,day):
     zonal = np.mean(data,axis=2)
     # dev = data - zonal[..., np.newaxis]
     dev = (data.T - zonal.T).T
-    np.save(f'./{name}_one_day_data.npy', data)
-    np.save(f'./{name}_one_day_zonal.npy', zonal)
-    np.save(f'./{name}_one_day_dev.npy', dev)
+    np.save(f'../../dataJRA55/{name}/{name}_one_day_data.npy', data)
+    np.save(f'../../dataJRA55/{name}/{name}_one_day_zonal.npy', zonal)
+    np.save(f'../../dataJRA55/{name}/{name}_one_day_dev.npy', dev)
     return 
     
 # ----------------------------
@@ -38,6 +38,8 @@ print(dc)
 for name in namelist:
     # globals()['data'+ name], globals()['zonal'+ name], globals()['dev'+ name] = hensa(name,day)
     hensa(name,dc)
+
+print('finish!')
 # %%
 # pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
 #         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
