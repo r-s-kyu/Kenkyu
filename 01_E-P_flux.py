@@ -9,7 +9,8 @@ Fz = np.zeros((145,37),dtype=np.float64)*np.nan
 namelist = ['hgt','tmp','ugrd','vgrd']
 
 def hensa(name,day):
-    file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
+    # file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
+    file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
     f = open(file, 'rb')
     print(f'{name} 読み込み中')
     array = np.fromfile(f,dtype='>f').reshape(366,37,145,288)
@@ -33,10 +34,11 @@ fday = date(year,1,1)
 
 dc = (date(year,month,day)-fday).days + 1
 # ---------------------------
+print(dc)
 
 for name in namelist:
     # globals()['data'+ name], globals()['zonal'+ name], globals()['dev'+ name] = hensa(name,day)
-    hensa(name,day)
+    hensa(name,dc)
 # %%
 # pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
 #         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
