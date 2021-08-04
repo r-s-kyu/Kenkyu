@@ -9,14 +9,14 @@ Fz = np.zeros((145,37),dtype=np.float64)*np.nan
 namelist = ['hgt','tmp','ugrd','vgrd']
 
 def hensa(name,day):
-    # file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
-    file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
+    file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
+    # file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
     f = open(file, 'rb')
     print(f'{name} 読み込み中')
     array = np.fromfile(f,dtype='>f').reshape(366,37,145,288)
     print(f'{name} 読み込み完了')
     f.close()
-    data = array[day,:,:,::-1]
+    data = array[day-1,:,:,::-1]
     # del array
     zonal = np.mean(data,axis=2)
     # dev = data - zonal[..., np.newaxis]
@@ -35,7 +35,6 @@ fday = date(year,1,1)
 dc = (date(year,month,day)-fday).days + 1
 # ---------------------------
 print(dc)
-
 for name in namelist:
     # globals()['data'+ name], globals()['zonal'+ name], globals()['dev'+ name] = hensa(name,day)
     hensa(name,dc)
