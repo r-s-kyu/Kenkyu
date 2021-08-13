@@ -1,46 +1,55 @@
 # %%
+from matplotlib.pyplot import savefig
 import numpy as np
 import math
 from datetime import date
+import os
+
+year = 2020
 
 Fy = np.zeros((145,37),dtype=np.float64)*np.nan
 Fz = np.zeros((145,37),dtype=np.float64)*np.nan
 
 namelist = ['temp','ugrd','vgrd']
 
-def hensa(name,day):
+def hensa(name,year):
+    dayc = (date(year,12,31)-date(year,1,1)).days + 1
+
     # file = f'D:/気象データ/{name}/anl_p_{name}.2020.bin'
-    file = f'D:/dataJRA55/{name}/anl_p_{name}.2020.bin'
+    file = f'D:/data/JRA55/{name}/anl_p_{name}.{year}.bin'
     f = open(file, 'rb')
     print(f'{name} 読み込み中')
     array = np.fromfile(f,dtype='>f').reshape(366,37,145,288)
     print(f'{name} 読み込み完了')
     f.close()
-    data = array[day-1,:,:,::-1]
+    data = array[:,:,::-1]
+    # data = array[day-1,:,:,::-1]
     # del array
-    zonal = np.mean(data,axis=2)
+    zonal = np.mean(data,axis=3)
     # dev = data - zonal[..., np.newaxis]
     dev = (data.T - zonal.T).T
-    np.save(f'../../dataJRA55/{name}/{name}_one_day_data.npy', data)
-    np.save(f'../../dataJRA55/{name}/{name}_one_day_zonal.npy', zonal)
-    np.save(f'../../dataJRA55/{name}/{name}_one_day_dev.npy', dev)
+    # np.save(f'../../dataJRA55/{name}/{name}_one_day_data.npy', data)
+    # np.save(f'../../dataJRA55/{name}/{name}_one_day_zonal.npy', zonal)
+    for i in range(dayc):
+        savefile = f'../../data/JRA55/{name}/{year}/{year}d{str(i+1).zfill(3)}_{name}_dev.npy'
+        if i == 0:
+            if not os.path.exists(savefile[:16]):
+                os.mkdir(savefile[:16])
+            if not os.path.exists(savefile[:16]+f'/{name}'):
+                os.mkdir(savefile[:16]+f'/{name}')         
+            if not os.path.exists(savefile[:16]+f'/{name}/{year}'):
+                os.mkdir(savefile[:16]+f'/{name}/{year}')         
+        np.save(savefile, dev[i])
     return 
     
-# ----------------------------
-year = 2020
-month = 2
-day = 1
-fday = date(year,1,1)
-
-dc = (date(year,month,day)-fday).days + 1
-# ---------------------------
-print(dc)
 for name in namelist:
-    # globals()['data'+ name], globals()['zonal'+ name], globals()['dev'+ name] = hensa(name,day)
-    hensa(name,dc)
+    hensa(name,year)
 
 print('finish!')
 # %%
+savefile = f'../../data/JRA55/{name}/{2020}/{year}d{str(i+1).zfill(3)}_{name}_dev.npy'
+print(savefile[:16])
+
 # pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
 #         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
 #         50,30,20,10,7,5,3,2,1])
