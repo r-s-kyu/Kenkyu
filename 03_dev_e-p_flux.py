@@ -92,16 +92,12 @@ for a in range(len(pcord)):
     if pcord[a] == lim:
         num = a
 
-
-
 min_value ,max_value = -100, 100
 div=33      #図を描くのに何色用いるか
 delta=(max_value-min_value)/div
 interval=np.linspace(min_value,max_value,div+1)
-print(interval)
+# print(interval)
 # interval=np.arange(min_value,abs(max_value)*2+delta,delta)[0:int(div)+1]
-
-
 X,Y=np.meshgrid(ycord,pcord)
 contf = plt.contourf(X,Y,nablaF,interval,cmap='bwr',extend='both') #cmap='bwr_r'で色反転, extend='both'で範囲外設定
 q = plt.quiver(X[num:,2::mabiki], Y[num:,2::mabiki], Fy[num:,2::mabiki], Fz[num:,2::mabiki]*100,pivot='middle',
