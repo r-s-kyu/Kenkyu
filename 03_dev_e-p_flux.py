@@ -5,20 +5,25 @@ import math
 from datetime import date
 
 year = 2020
-month = 2
-day = 1
+month = 8
+day = 20
 fday = date(year,1,1)
 
 dc = (date(year,month,day)-fday).days + 1
 
-namelist = ['temp','ugrd','vgrd']
-# kindlist = ['data','zonal','dev']
-kindlist = ['dev']
+namelist = ['tmp','ugrd','vgrd', 'hgt']
+kindlist = ['zonal','dev']
+# kindlist = ['dev']
 
-for kind in kindlist:
-    for name in namelist:
-        savefile = f'../../data/JRA55/{name}/{year}/{year}d{str(dc).zfill(3)}_{name}_{kind}.npy'
-        globals()[kind + name] = np.load(savefile)
+# for kind in kindlist:
+
+for name in namelist:
+    if name == 'hgt':
+        kind = kindlist[0]
+    else:
+        kind = kindlist[1]
+    savefile = f'D:/data/JRA55/{name}/{year}/{year}d{str(dc).zfill(3)}_{name}_{kind}.npy'
+    globals()[kind + name] = np.load(savefile)
 
 pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
@@ -52,7 +57,7 @@ Fy = (((-1)*a*vudev_mean*np.cos(phicord)).T*rho).T
 devFy = np.gradient(Fy*np.cos(phicord), phicord,axis=1)
 
 z = -H*np.log(pcord*100/ps)
-vTdev_mean = np.mean(devvgrd*devtemp,axis=2)
+vTdev_mean = np.mean(devvgrd*devtmp,axis=2)
 Fz = ((a*np.cos(phicord)*f*R*vTdev_mean/(N_2*H)).T*rho).T
 devFz = np.gradient(Fz,z,axis=0)
 nablaF = devFy/(a*np.cos(phicord)) + devFz
@@ -61,13 +66,13 @@ fzmean = np.mean(np.mean(nablaF))
 nablaF = ((nablaF/(a*np.cos(phicord))).T/rho).T
 nablaF = nablaF*60*60*24
 fmean = np.mean(np.mean(nablaF))
-vector_scale = 1.0e+6
+vector_scale = 8.0e+5
 # vector_scale = 5.0e+4
 lim = 100
 mabiki = 5
 
 import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(6, 8),facecolor='white')
+fig, ax = plt.subplots(figsize=(6, 6),facecolor='white')
 
 pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
@@ -78,8 +83,8 @@ ycord = np.arange(-90, 90.1, 1.25)
 ylon=([100, 50, 10, 5, 1])
 # chei=(["1000", "500", "100", "50", "10", "5", "1"])
 chei=(["100", "50", "10", "5", "1"])
-ax.set_ylim(lim,1.0e-1)
-ax.set_xlim(30,80)
+ax.set_ylim(lim,1.0)
+ax.set_xlim(-80,-30)
 ax.set_yscale('log')
 ax.set_yticks(ylon)
 ax.set_yticklabels(chei)
@@ -87,20 +92,22 @@ ax.set_xlabel('LAT')
 ax.set_ylabel('pressure')
 # ax.imshow(vmin=1e-6,vmax=1e+6)
 
-
+# num = 0
 for a in range(len(pcord)):
     if pcord[a] == lim:
         num = a
 
 min_value ,max_value = -100, 100
-div=33      #図を描くのに何色用いるか
+div=40      #図を描くのに何色用いるか
 delta=(max_value-min_value)/div
 interval=np.linspace(min_value,max_value,div+1)
 # print(interval)
 # interval=np.arange(min_value,abs(max_value)*2+delta,delta)[0:int(div)+1]
 X,Y=np.meshgrid(ycord,pcord)
+cont = plt.contour(X,Y,zonalhgt,colors='black')
 contf = plt.contourf(X,Y,nablaF,interval,cmap='bwr',extend='both') #cmap='bwr_r'で色反転, extend='both'で範囲外設定
 q = plt.quiver(X[num:,2::mabiki], Y[num:,2::mabiki], Fy[num:,2::mabiki], Fz[num:,2::mabiki]*100,pivot='middle',
                 scale_units='xy', headwidth=5,scale=vector_scale, color='green',width=0.005)
+plt.title(f'{month}/{day}/{year} E-Pflux and ∇',fontsize=20)
 plt.colorbar(contf)
 plt.savefig('./warota.png')
