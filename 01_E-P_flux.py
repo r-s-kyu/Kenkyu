@@ -7,8 +7,15 @@ import os
 
 year = 2020
 namelist = ['tmp','ugrd','vgrd', 'hgt']
+startyear =2010
+endyear =2012
 
 def hensa(name,year):
+
+    sdate = date(year, 1, 1)
+    edate = date(year, 12, 31)
+    allcday = (edate-sdate).days + 1
+
     if name == 'hgt':
         kind ='zonal'
     else:
@@ -25,7 +32,7 @@ def hensa(name,year):
         file = f'D:/data/JRA55/{name}/anl_p_{name}.{year}.bin'
         f = open(file, 'rb')
         print(f'{name} 読み込み中')
-        array = np.fromfile(f,dtype='>f').reshape(366,37,145,288)
+        array = np.fromfile(f,dtype='>f').reshape(allcday,37,145,288)
         print(f'{name} 読み込み完了')
         f.close()
         data = array[:,:,::-1]
@@ -45,8 +52,8 @@ def hensa(name,year):
     else:
         print(f'already exist {name}-{kind} {year}')
     return 
-    
-for name in namelist:
-    hensa(name,year)
+for year in range(startyear,endyear+1):
+    for name in namelist:
+        hensa(name,year)
 
 print('finish!')

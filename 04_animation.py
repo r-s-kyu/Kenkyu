@@ -10,17 +10,18 @@ import matplotlib.animation as animation
 import calendar
 
 # ===========================初期値====================================
-year = 2020
+# year = 2020
+startyear =2011
+endyear =2012
+startdate = [8, 10]
+enddate = [11, 10]
 # month = 8
 # day = 20
 # =====================================================================
 
 
 # ===========================定数======================================
-fday = date(year,1,1)
-eday = date(year,12,31)
-# yearallday = (fday-eday).days+1
-yearallday = 10
+
 
 pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
@@ -79,7 +80,7 @@ def allDayChangeToDate(year, day_count):
     return month, day
 
 
-def epFlux(dc):
+def epFlux(dc,year):
     for name in namelist:
         if name == 'hgt':
             kind = kindlist[0]
@@ -108,14 +109,16 @@ def epFlux(dc):
     return Fy, Fz, nablaF
 
 
-
+# year =2010
 
 
 #アニメーションの各時間で図を作成
-def update(frame):
+def update(frame, year):
+    # if frame != 0:
+    #     plt.cla()
     month, day = allDayChangeToDate(year, frame+1)
     # dc = (date(year,month,day)-fday).days + 1
-    Fy, Fz, nablaF = epFlux(frame+1)
+    Fy, Fz, nablaF = epFlux(frame+1,year)
 
     # num = 0
  
@@ -129,7 +132,15 @@ def update(frame):
     plt.title(f'{month}/{day}/{year} E-Pflux and ∇',fontsize=20)
     # plt.savefig('./warota.png')
 
-def main():
+def makeAnimation(year):
+
+    fday = date(year,1,1)
+    # eday = date(year,12,31)
+    # yearallday = (fday-eday).days+1
+    # yearallday = 10
+
+    startcday = (date(year,startdate[0],startdate[1])-fday).days + 1
+    endcday = (date(year,enddate[0],enddate[1])-fday).days + 1
     fig = plt.figure()
     ax = fig.add_subplot(111)
     # vector_scale = 5.0e+4
@@ -143,14 +154,23 @@ def main():
     ax.set_ylim(lim,1.0)
     ax.set_xlim(-80,-30)
 
-    start = 222
-    end = 366
-    anim = FuncAnimation(fig, update, frames = np.arange(start,end+1), interval = 500)
+    # startdate = 222
+    # enddate = 366
+    anim = FuncAnimation(fig, update, fargs = [year], frames = np.arange(startcday,endcday+1), interval = 500)
     # ax.colorbar(contf)
     # plt.show()
     w = animation.PillowWriter(fps=100)
-    anim.save("pro1.gif", writer = 'imagemagick')
-    print('finish')
+    startStr = f'{year}{str(startdate[0]).zfill(2)+str(startdate[1]).zfill(2)}'
+    endStr = f'{year}{str(enddate[0]).zfill(2)+str(enddate[1]).zfill(2)}'
+    filename = f'ani{startStr}_{endStr}.gif'
+    anim.save(filename, writer = 'imagemagick')
+    print(f'finish {year}')
+
+def main():
+    for year in range(startyear,endyear+1):
+        makeAnimation(year)
+    # makeAnimation(year)
+    print(f'finish program!')
+
 
 main()
-
