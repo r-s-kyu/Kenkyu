@@ -3,10 +3,11 @@
 import numpy as np
 import math
 from datetime import date
+import os
 
 year = 2020
-month = 8
-day = 20
+month = 12
+day = 1
 fday = date(year,1,1)
 
 dc = (date(year,month,day)-fday).days + 1
@@ -29,11 +30,6 @@ pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
         50,30,20,10,7,5,3,2,1])
 
-dp = np.array([])
-for i in range(len(pcord)-1):
-    dp = np.append(dp, pcord[i]-pcord[i+1])
-dp = np.append(dp,1)
-# print(pcord)
 
 phicord = np.arange(-90,91,1.25)*(math.pi/180.)
 
@@ -65,6 +61,7 @@ fzmean = np.mean(np.mean(nablaF))
 
 nablaF = ((nablaF/(a*np.cos(phicord))).T/rho).T
 nablaF = nablaF*60*60*24
+print(nablaF)
 fmean = np.mean(np.mean(nablaF))
 vector_scale = 8.0e+5
 # vector_scale = 5.0e+4
@@ -110,4 +107,7 @@ q = plt.quiver(X[num:,2::mabiki], Y[num:,2::mabiki], Fy[num:,2::mabiki], Fz[num:
                 scale_units='xy', headwidth=5,scale=vector_scale, color='green',width=0.005)
 plt.title(f'{month}/{day}/{year} E-Pflux and ∇',fontsize=20)
 plt.colorbar(contf)
-plt.savefig('./warota.png')
+file =  f'./picture/day/{year}/{year}{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png'
+if not os.path.exists(file[:13]+f'/{year}'):
+    os.makedirs(file[:13]+f'/{year}')
+plt.savefig(file)

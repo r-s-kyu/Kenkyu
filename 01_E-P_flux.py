@@ -8,7 +8,7 @@ import os
 year = 2020
 namelist = ['tmp','ugrd','vgrd', 'hgt']
 startyear =2010
-endyear =2012
+endyear =2020
 
 def hensa(name,year):
 
