@@ -6,10 +6,10 @@ from datetime import date
 import matplotlib.pyplot as plt
 
 # ====================初期値===================
-syear = 2016
+syear = 2014
 eyear = 2020
-month = 11
-day = 1
+month = 10
+day = 17
 
 # ====================描画値===================
 vector_scale = 8.0e+5
