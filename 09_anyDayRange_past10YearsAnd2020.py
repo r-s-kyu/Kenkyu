@@ -12,8 +12,8 @@ meanstart = 2010
 meanend = 2019
 year = 2020
 # month = 8
-sdate = [9,1]
-edate = [9,6]
+sdate = [11,1]
+edate = [11,30]
 
 # ====================描画値===================
 vector_scale = 8.0e+5
