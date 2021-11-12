@@ -5,9 +5,16 @@ import math
 from datetime import date
 import os
 
-year = 2020
-month = 2
-day = 3
+
+print(f'input year')
+year = int(input())
+print(f'input month')
+month = int(input())
+print(f'input day')
+day = int(input())
+# year = 2020
+# month = 10
+# day = 10
 fday = date(year,1,1)
 
 dc = (date(year,month,day)-fday).days + 1
@@ -83,7 +90,7 @@ ylon=([100, 50, 10, 5, 1])
 # chei=(["1000", "500", "100", "50", "10", "5", "1"])
 chei=(["100", "50", "10", "5", "1"])
 ax.set_ylim(lim,1.0)
-ax.set_xlim(-90,90)
+ax.set_xlim(-80,-30)
 ax.set_yscale('log')
 ax.set_yticks(ylon)
 ax.set_yticklabels(chei)
