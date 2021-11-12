@@ -127,9 +127,9 @@ def draw(month,day):
     fig.colorbar(contf,cax=cbar_ax)
     plt.subplots_adjust(right=0.85)
     plt.subplots_adjust(wspace=0.15)
-    if not os.path.exists(f'./picture/yearsmean_2020/{month}'):
-        os.makedirs(f'./picture/yearsmean_2020/{month}')
-    plt.savefig(f'./picture/yearsmean_2020/{month}/{meanyears}yearsMeanTo{year}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
+    if not os.path.exists(f'D:/picture/study/JRA55/yearsmean_2020/{month}'):
+        os.makedirs(f'D:/picture/study/JRA55/yearsmean_2020/{month}')
+    plt.savefig(f'D:/picture/study/JRA55/yearsmean_2020/{month}/{meanyears}yearsMeanTo{year}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
 
 
 def main():

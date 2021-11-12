@@ -11,7 +11,7 @@ import os
 meanstart = 2010
 meanend = 2019
 year = 2020
-month = 8
+month = 7
 
 # ====================描画値===================
 vector_scale = 8.0e+5
@@ -26,7 +26,7 @@ defineYear = 2019 #うるう年ではない年（てきとう）
 # fday = date(defineYear,1,1)
 # sdatecount = (date(defineYear,sdate[0],sdate[1])-fday).days + 1
 # edatecount = (date(defineYear,edate[0],edate[1])-fday).days + 1
-allDateCount = (date(defineYear,edate[0],edate[1]) - date(defineYear,sdate[0],sdate[1])).days +1
+# allDateCount = (date(defineYear,edate[0],edate[1]) - date(defineYear,sdate[0],sdate[1])).days +1
 meanyears = meanend - meanstart + 1
 pcord = np.array([1000,975,950,925,900,875,850,825,800,775,750,700,
         650,600,550,500,450,400,350,300,250,225,200,175,150,125,100,70,
@@ -144,7 +144,7 @@ def draw():
     plt.subplots_adjust(wspace=0.15)
     # if not os.path.exists(f'./picture/monthYearMean/{month}'):
     #     os.makedirs(f'./picture/yearsmean_2020/{month}')
-    plt.savefig(f'./picture/monthYearMean/month{month}Mean_{meanstart}to{meanend}and{year}_E-Pflux.png')
+    plt.savefig(f'D:/picture/study/JRA55/monthYearMean/month{month}Mean_{meanstart}to{meanend}and{year}_E-Pflux.png')
     print(f'finish drawing!!!')
 
 def main():

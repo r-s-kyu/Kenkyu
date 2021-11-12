@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 # ====================初期値===================
 syear = 2014
 eyear = 2020
-month = 10
-day = 17
+month = 11
+day = 10
 
 # ====================描画値===================
 vector_scale = 8.0e+5
@@ -100,7 +100,7 @@ def draw():
     fig.colorbar(contf,cax=cbar_ax)
     plt.subplots_adjust(right=0.85)
     plt.subplots_adjust(wspace=0.15)
-    plt.savefig(f'./picture/manyYear/{syear}-{eyear}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
+    plt.savefig(f'D:/picture/study/JRA55/manyYear/{syear}-{eyear}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
 
 def main():
     draw()

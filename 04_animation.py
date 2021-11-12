@@ -162,7 +162,7 @@ def makeAnimation(year):
     w = animation.PillowWriter(fps=100)
     startStr = f'{year}{str(startdate[0]).zfill(2)+str(startdate[1]).zfill(2)}'
     endStr = f'{year}{str(enddate[0]).zfill(2)+str(enddate[1]).zfill(2)}'
-    filename = f'ani{startStr}_{endStr}.gif'
+    filename = f'D:/picture/study/JRA55/animation/ani{startStr}_{endStr}.gif'
     anim.save(filename, writer = 'imagemagick')
     print(f'finish {year}')
 

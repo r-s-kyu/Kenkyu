@@ -180,7 +180,7 @@ def draw():
     # if not os.path.exists(f'./picture/monthYearMean/{month}'):
     #     os.makedirs(f'./picture/yearsmean_2020/{month}')
     dateRange = f'{str(sdate[0]).zfill(2)+str(sdate[1]).zfill(2)}-{str(edate[0]).zfill(2)+str(edate[1]).zfill(2)}'
-    file = f'./picture/anyDayRangeMean/{dateRange}Mean_{meanstart}to{meanend}and{year}_E-Pflux.png'
+    file = f'D:/picture/study/JRA55/anyDayRangeMean/{dateRange}Mean_{meanstart}to{meanend}and{year}_E-Pflux.png'
     plt.savefig(file)
     print(f'finish drawing!!!')
 

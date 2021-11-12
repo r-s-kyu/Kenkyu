@@ -116,7 +116,7 @@ q = plt.quiver(X[num:,2::mabiki], Y[num:,2::mabiki], Fy[num:,2::mabiki], Fz[num:
                 scale_units='xy', headwidth=5,scale=vector_scale, color='green',width=0.005)
 plt.title(f'{month}/{day}/{year} E-Pflux and ∇',fontsize=20)
 plt.colorbar(contf)
-file =  f'./picture/day/{year}/{year}{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png'
+file =  f'D:/picture/study/JRA55/day/{year}/{year}{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png'
 if not os.path.exists(file[:13]+f'/{year}'):
     os.makedirs(file[:13]+f'/{year}')
 plt.savefig(file)

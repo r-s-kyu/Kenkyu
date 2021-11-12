@@ -4,13 +4,13 @@ import numpy as np
 import math
 from datetime import date
 import matplotlib.pyplot as plt
-
+import os
 # ====================初期値===================
 meanstart = 2010
 meanend = 2019
 year = 2020
-month = 2
-day = 29
+month = 11
+day = 11
 
 # ====================描画値===================
 vector_scale = 8.0e+5
@@ -117,7 +117,9 @@ def draw():
     fig.colorbar(contf,cax=cbar_ax)
     plt.subplots_adjust(right=0.85)
     plt.subplots_adjust(wspace=0.15)
-    plt.savefig(f'./picture/yearsmean_2020/{meanyears}yearsMeanTo{year}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
+    if not os.path.exists(f'D:/picture/study/JRA55/yearsmean_2020/{month}'):
+        os.makedirs(f'D:/picture/study/JRA55/yearsmean_2020/{month}')
+    plt.savefig(f'D:/picture/study/JRA55/yearsmean_2020/{month}/{meanyears}yearsMeanTo{year}_{str(month).zfill(2)+str(day).zfill(2)}_E-Pflux.png')
 
 def main():
     draw()
